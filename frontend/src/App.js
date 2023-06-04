@@ -14,7 +14,9 @@ import { Parser } from '@json2csv/plainjs';
 import { useState, useEffect } from "react";
 
 function App() {
+  //store a list of papers that have been extracted
   const [paperData, setPaperData] = useState([])
+  //handler that converts existing paper data into csv and downloads to clients device
   const downloadCsv = () => {
     try {
       const parser = new Parser();
@@ -56,7 +58,6 @@ function App() {
           </TableHead>
           <TableBody>
             {paperData.map((row, index) => {
-              // const weaknesses = row.weaknesses.join(',')
               return (
                 <TableRow key={index}>
                   <TableCell>{row.title}</TableCell>

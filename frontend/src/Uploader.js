@@ -5,11 +5,13 @@ import Input from '@mui/material/Input';
 import Stack from '@mui/material/Stack';
 
 function Uploader(props) {
+    //Set api path, and store chosen file as a state variable
     const backendURL = 'http://127.0.0.1:5000'
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
     const onFileUpload = async () => {
         setLoading(true)
+        //attach selected file to post request body and append it to list of key feature data from previous files
         const formData = new FormData()
         formData.append("study", file)
         console.log(file.name)

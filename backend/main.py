@@ -11,7 +11,7 @@ import openai
 app = Flask(__name__)
 
 #fill in your api key here
-openai.api_key = ""
+openai.api_key = "apikey here"
 
 #Takes a PDF file and extract each page's text. Returns a list with text from each page
 def extractText(filename):
