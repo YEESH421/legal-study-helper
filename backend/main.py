@@ -72,13 +72,14 @@ def process_Pdf():
 
     #Start with title, author, and abstract
     sysPrompt1 =  f"You are a helpful research assistant. This is the first page of an academic paper {firstPage}"
-    userPrompt1 = f"Paper name: ? Authors: ? Abstract: ?" #This prompt gives us a predictable and parsable response 
+    userPrompt1 = f"Paper name: ? Authors: ? Abstract: ? Publication Year: ?" #This prompt gives us a predictable and parsable response 
     res1 = query(sysPrompt1, userPrompt1)
     #Parse info from GPT response
     temp = res1.split('\n')
     title = temp[0].replace("Paper name: ", "")
     authors = temp[1].replace("Authors: ", "")
     abstract = temp[2].replace("Abstract: ", "")
+    year = temp[3].replace("Publication Year: ", "")
 
     #Next is to analyze results for methodology, conclusion, study size, study duration, strength of data
     sysPrompt2 =  f"You are a helpful research assistant. This is the results of an academic paper {sections['results']}"
@@ -98,7 +99,7 @@ def process_Pdf():
     userPrompt3 = f"In bullets, give study's weaknesses"
     weaknesses = query(sysPrompt3, userPrompt3).split("\n")
 
-    data = {"title": title, "authors": authors, "abstract": abstract, "method": methodology, "conclusion": conclusion, "size": size, "duration": duration, "strength": strength, "weaknesses": weaknesses}
+    data = {"title": title, "year": year, "authors": authors, "abstract": abstract, "method": methodology, "conclusion": conclusion, "size": size, "duration": duration, "strength": strength, "weaknesses": weaknesses}
     response = jsonify(response=data, status=200, mimetype='application/json')
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

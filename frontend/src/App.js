@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { Parser } from '@json2csv/plainjs';
 import { useState, useEffect } from "react";
 
@@ -40,6 +43,7 @@ function App() {
           <TableHead>
             <TableRow>
               <TableCell>Title</TableCell>
+              <TableCell>Year</TableCell>
               <TableCell>Authors</TableCell>
               <TableCell>Abstract</TableCell>
               <TableCell>Method</TableCell>
@@ -52,10 +56,11 @@ function App() {
           </TableHead>
           <TableBody>
             {paperData.map((row, index) => {
-              const weaknesses = row.weaknesses.join(',')
+              // const weaknesses = row.weaknesses.join(',')
               return (
                 <TableRow key={index}>
                   <TableCell>{row.title}</TableCell>
+                  <TableCell>{row.year}</TableCell>
                   <TableCell>{row.authors}</TableCell>
                   <TableCell>{row.abstract}</TableCell>
                   <TableCell>{row.method}</TableCell>
@@ -63,7 +68,18 @@ function App() {
                   <TableCell>{row.size}</TableCell>
                   <TableCell>{row.conclusion}</TableCell>
                   <TableCell>{row.strength}</TableCell>
-                  <TableCell>{weaknesses}</TableCell>
+                  <TableCell>
+                    <List dense>
+                      {row.weaknesses.map((element) => {
+                        return (
+                          <ListItem>
+                            <ListItemText primary={element}>
+                            </ListItemText>
+                          </ListItem>
+                        )
+                      })}
+                    </List>
+                  </TableCell>
                 </TableRow>
               )
             })}
