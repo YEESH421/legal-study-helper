@@ -9,11 +9,11 @@ Backend Python code is in the ```/backend``` folder. It requires Flask setup bef
 ### Steps
 First, navigate to backend folder ```cd  backend``` and run the following commands to install the necessary dependencies () <br/>```pip install virtualenv```<br/> ```virtualenv venv``` <br/> ```venv\Scripts\activate```  <br/>```pip install Flask PyPDF2 openai```<br/>
 
-Next, copy your OpenAI api key ![Capture](https://github.com/YEESH421/legal-study-helper/assets/30268051/dc6bf8f1-ed70-4252-8006-d199feb49d17)
+Next, copy your OpenAI api key ![Capture](Capture.PNG)
 
 and paste it in the ```openai.api_key``` variable in ```main.py``` 
 
-![Capture2](https://github.com/YEESH421/legal-study-helper/assets/30268051/14471abe-8c5d-4ce5-8d06-2172122ac4fd)
+![Capture2](Capture2.PNG)
 
 Now, you can start the backend by running ```python main.py```
 
