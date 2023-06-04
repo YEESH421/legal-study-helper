@@ -6,8 +6,9 @@ You will need to have Python/Pip and Node.js/NPM installations on your local mac
 
 ## Backend Guide
 Backend Python code is in the ```/backend``` folder. It requires Flask setup before it can be started.
-### Steps
-First, navigate to backend folder ```cd  backend``` and run the following commands to install the necessary dependencies <br/>```pip install virtualenv```<br/> ```virtualenv venv``` <br/> ```venv\Scripts\activate```  <br/>```pip install Flask PyPDF2 openai```<br/>
+### Setup
+The setup only need to be run once. If you have already done these steps, you can skip to **Start Backend**
+First, navigate to backend folder ```cd  backend``` and run the following commands to install the necessary dependencies <br/>```pip install virtualenv```<br/> ```virtualenv venv```  <br/>```pip install Flask PyPDF2 openai```<br/>
 
 Next, copy your OpenAI api key ![Capture](Capture.PNG)
 
@@ -15,7 +16,9 @@ and paste it in the ```openai.api_key``` variable in ```main.py```
 
 ![Capture2](Capture2.PNG)
 
-Now, you can start the backend by running ```python main.py```
+### Start Backend
+Activate the virtual environment ```venv\Scripts\activate```
+start the backend by running ```python main.py```
 
-## Frontend guide 
-Frontend code is in the ```/fronend``` folder. To start, navigate into the frontend folder ```cd frontend```, and run ```npm run start```. 
+## Start Frontend 
+Frontend code is in the ```/fronend``` folder. To start your server, navigate into the frontend folder ```cd frontend```, and run ```npm run start```. Then navigate to [localhost:3000](http://localhost:3000/)
