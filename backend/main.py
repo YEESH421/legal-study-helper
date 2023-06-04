@@ -38,7 +38,7 @@ def extractSections(pageList):
     methods = fullText[methodsStartInd: resultStartInd]
     results = fullText[resultStartInd: discussionStartInd]
     discussion = fullText[discussionStartInd: referencesStartInd]
-    return {"methods": methods, "results": results, "discussion": discussion}
+    return {"methods": methods, "results": results[:3882] if len(results) > 3882 else results, "discussion": discussion[:3882] if len(discussion) > 3882 else discussion}
 
 #query openai
 def query(sysPrompt, userPrompt):
@@ -55,7 +55,7 @@ def query(sysPrompt, userPrompt):
 def getFirstPage(pageList):
     for page in pageList:
         if page != "":
-            return page
+            return page[:3979] if len(page) > 3979 else page
         
 #Listen to POST API calls. Expects a pdf file, and will send back data about features
 @app.route('/upload', methods=['POST'])
@@ -81,11 +81,12 @@ def process_Pdf():
     abstract = temp[2].replace("Abstract: ", "")
 
     #Next is to analyze results for methodology, conclusion, study size, study duration, strength of data
-    sysPrompt2 =  f"You are a helpful research assistant. This is the first page of an academic paper {sections['results']}"
+    sysPrompt2 =  f"You are a helpful research assistant. This is the results of an academic paper {sections['results']}"
     userPrompt2 = f"As briefly as possibe, answer the following. Experiment Methodology: ? Conclusion: ? Study Size: ? Study Duration: ? Strength of data: ?" #This prompt gives us a predictable and parsable response 
 
     res2 = query(sysPrompt2, userPrompt2)
     temp = res2.split('\n')
+    temp = [i for i in temp if i != ""]
     methodology = temp[0].replace("Experiment Methodology: ", "")
     conclusion = temp[1].replace("Conclusion: ", "")
     size = temp[2].replace("Study Size: ", "")
@@ -93,12 +94,14 @@ def process_Pdf():
     strength = temp[4].replace("Strength of data: ", "")
 
     #Examine discussion for weaknesses in study
-    sysPrompt3 =  f"You are a helpful research assistant. This is the first page of an academic paper {sections['discussion']}"
-    userPrompt3 = f"In bullets, give study's weaknesses."
-    weaknesses = query(sysPrompt3, userPrompt3).split("\n").replace("-", "")
+    sysPrompt3 =  f"You are a helpful research assistant. This is the discussion of an academic paper {sections['discussion']}"
+    userPrompt3 = f"In bullets, give study's weaknesses"
+    weaknesses = query(sysPrompt3, userPrompt3).split("\n")
 
-    response = {"title": title, "authors": authors, "abstract": abstract, "method": methodology, "conclusion": conclusion, "size": size, "duration": duration, "strength": strength, "weaknesses": weaknesses}
-    return jsonify(response=response, status=200, mimetype='application/json')
+    data = {"title": title, "authors": authors, "abstract": abstract, "method": methodology, "conclusion": conclusion, "size": size, "duration": duration, "strength": strength, "weaknesses": weaknesses}
+    response = jsonify(response=data, status=200, mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
  
 # main driver function
 if __name__ == '__main__':
